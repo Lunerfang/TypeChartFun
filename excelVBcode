@@ -1,0 +1,163 @@
+Sub colorChange()
+
+Dim col As Integer
+Dim row As Integer
+Dim currVal As Double
+Dim colorMax As Integer
+Dim colorNorm As Integer
+Dim colorMin As Integer
+Dim colorSpec As Integer
+
+colorMax = Application.InputBox("Select Good Cell", "Good Cell Color", Type:=8).Interior.ColorIndex
+colorNorm = Application.InputBox("Select Ok Cell", "Ok Cell Color", Type:=8).Interior.ColorIndex
+colorMin = Application.InputBox("Select Bad Cell", "Bad Cell Color", Type:=8).Interior.ColorIndex
+'colorSpec = Cells(22, 6).Interior.ColorIndex
+
+col = Application.InputBox("Select Start Col", "Start Cell", Type:=8).Column
+row = 2
+
+Do Until IsEmpty(Cells(row, col).Value)
+    Do Until row = 20
+            currVal = Cells(row, col).Value
+            If currVal > 1 Then
+                Cells(row, col).Interior.ColorIndex = colorMax
+            End If
+            If currVal = 1 Then
+                Cells(row, col).Interior.ColorIndex = colorNorm
+            End If
+            If currVal < 1 Then
+                Cells(row, col).Interior.ColorIndex = colorMin
+            End If
+            If currVal = Cells(22, 6).Value Or currVal = Cells(22, 9).Value Then
+                Cells(row, col).Interior.ColorIndex = colorSpec
+            End If
+        row = row + 1
+    Loop
+    row = 2
+    col = col + 1
+Loop
+
+
+
+End Sub
+
+Sub colorAddition()
+
+Dim row As Integer
+Dim col As Integer
+Dim currVal As Integer
+Dim colorNorm As Integer
+Dim colorMin As Integer
+Dim colorSpec As Integer
+Dim colorMax As Integer
+
+row = 2
+col = 2
+
+colorMax = Cells(21, 2).Interior.ColorIndex
+colorNorm = Cells(22, 2).Interior.ColorIndex
+colorMin = Cells(23, 2).Interior.ColorIndex
+colorSpec = Cells(22, 6).Interior.ColorIndex
+
+Do Until IsEmpty(Cells(row, col).Value)
+    Do Until IsEmpty(Cells(row, col).Value)
+        currVal = Cells(row, col).Interior.ColorIndex
+        
+        If currVal = colorMax Then
+            Cells(row, 21).Value = Cells(row, 21).Value + 1
+        ElseIf currVal = colorNorm Then
+            Cells(row, 22).Value = Cells(row, 22).Value + 1
+        ElseIf currVal = colorMin Then
+            Cells(row, 23).Value = Cells(row, 23).Value + 1
+        ElseIf currVal = colorSpec Then
+            Cells(row, 24).Value = Cells(row, 24).Value + 1
+        End If
+            
+        col = col + 1
+    Loop
+    col = 2
+    row = row + 1
+Loop
+
+End Sub
+
+Sub elemdouble()
+    Dim rowPri As Integer
+    Dim rowSec As Integer
+    Dim colPri As Integer
+    Dim colSec As Integer
+    Dim pri1 As Integer
+    Dim sec1 As Integer
+    Dim pri2 As Integer
+    Dim sec2 As Integer
+    Dim maxcol As Integer
+    
+    rowPri = 1
+    rowSec = 1
+    colPri = 1
+    colSec = 1
+    
+    Do Until IsEmpty(Cells(1, colPri))
+        colPri = colPri + 1
+    Loop
+    
+    maxcol = colPri
+    colPri = 1
+    
+    Do Until colPri = maxcol + 1
+        pri1 = Cells(1, colPri).Value
+        sec1 = Cells(2, colPri).Value
+        colSec = 1
+        
+        Do Until colSec = colPri
+        pri2 = Cells(1, colSec).Value
+        sec2 = Cells(2, colSec).Value
+            If ((pri1 = pri2) Or (pri1 = sec2)) And ((sec1 = sec2) Or (sec1 = pri2)) Then
+                Do Until IsEmpty(Cells(rowSec, colPri))
+                    Cells(rowSec, colPri).Value = ""
+                    rowSec = rowSec + 1
+                Loop
+                rowSec = 1
+                
+            End If
+            
+           colSec = colSec + 1
+        Loop
+        
+        colPri = colPri + 1
+    Loop
+       
+End Sub
+
+Sub NumToType()
+    Dim pokeType1 As String
+    Dim pokeInt1 As Integer
+    Dim pokeType2 As String
+    Dim pokeInt2 As Integer
+    Dim dualType As String
+    Dim col As Integer
+    
+    col = 2
+    
+    Do Until IsEmpty(Cells(1, col))
+        pokeInt1 = Cells(1, col).Value
+        pokeInt2 = Cells(2, col).Value
+        
+        If pokeInt1 = pokeInt2 Then
+            dualType = Cells(pokeInt1 + 2, 1)
+        Else
+            pokeType1 = Cells(pokeInt1 + 2, 1)
+            pokeType2 = Cells(pokeInt2 + 2, 1)
+            dualType = pokeType1 + "/" + pokeType2
+        End If
+        
+        Cells(1, col).Value = ""
+        Cells(2, col).Value = dualType
+        
+        
+        col = col + 1
+    Loop
+    
+    
+End Sub
+
